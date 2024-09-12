@@ -49,8 +49,7 @@ app.get('/sum', (req, res)=> {
     else{
       res.send(data)
     }
-  })
-})
+  });
 
 app.post('/createUser', createUser)
 
