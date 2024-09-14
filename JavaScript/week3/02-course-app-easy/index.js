@@ -33,7 +33,7 @@ const userAuthentication = (req,res,next)=>{
 // Admin routes
 app.post('/admin/signup', (req, res) => {
   const admin = req.body
-  const adminAlreadyExists = ADMINS.find(a => a.username === admin.username && a.password === admin.password)
+  const adminAlreadyExists = ADMINS.find(a => a.username === admin.username)
   if (adminAlreadyExists){
     res.status(403).send("Admin Already Exists.")
   }
