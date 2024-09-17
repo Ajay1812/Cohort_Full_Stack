@@ -77,6 +77,8 @@ app.post('/admin/courses', authenticateJwt, (req, res) => {
 app.put('/admin/courses/:courseId', authenticateJwt, (req, res) => {
   const course = COURSES.find(c => c.id === parseInt(req.params.courseId));
   if (course) {
+    // to use this spread method we have to find index of courses where we have to update
+    // COURSES[index] = {...course[index], ...req.body} 
     Object.assign(course, req.body);
     fs.writeFileSync('courses.json', JSON.stringify(COURSES));
     res.json({ message: 'Course updated successfully' });
