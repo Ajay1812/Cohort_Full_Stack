@@ -170,8 +170,8 @@ app.post('/users/courses/:courseId', authenticateJwt ,async(req, res) => {
   }
 });
 
-app.get('/users/purchasedCourses', authenticateJwt, async(req, res) => {
-  // .populate() will use to get the purchasedCourses from courses schema using the ids.
+app.get('/users/purchasedCourses',authenticateJwt,async(req, res) => {
+  // .populate() will use to get purchasedCourses from course schema using the ids.
   // if we dont use .populate() it will give us coures of ids purchased by user. 
   const user = await User.findOne({username : req.user.username}).populate('purchasedCourses')
   if (user){
