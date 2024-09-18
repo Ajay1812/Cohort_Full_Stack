@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const app = express();
+require('dotenv').config();
 app.use(express.json());
 
 const SECRET = "QWsaxdwafhgqwWSDsad"
@@ -10,7 +11,7 @@ const SECRET = "QWsaxdwafhgqwWSDsad"
 // let USERS = [];
 // let COURSES = [];
 
-// Define mongooose schemas
+// Define MongoDB schemas
 const adminSchema = new mongoose.Schema({
   username: String,
   password: String
@@ -38,7 +39,7 @@ const Course = mongoose.model('Course', courseSchema)
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization
   if (authHeader) {
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1]; // to get the token ['Bearer','token....']
     jwt.verify(token, SECRET, (err, user) => {
       if (err) {
         return res.status(403).send('Authentication failed')
@@ -52,7 +53,9 @@ const authenticateJwt = (req, res, next) => {
 }
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://akumar01c:39kQW5jjWegIygRc@cluster0.fyfyk.mongodb.net/courses')
+const mongoUser = process.env.MONGO_USER;
+const mongoPassword = process.env.MONGO_PASSWORD;
+mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.fyfyk.mongodb.net/courses`)
 
 // Admin routes
 // using then and pass the callback function to further operations
@@ -97,6 +100,7 @@ app.post('/admin/login', async (req, res) => {
   }
 });
 
+// Create and update courses
 app.post('/admin/courses', authenticateJwt ,async (req, res) => {
   const course = new Course(req.body)
   await course.save()
@@ -149,6 +153,7 @@ app.get('/users/courses',authenticateJwt, async (req, res) => {
   res.json({courses})
 });
 
+// user buy a course
 app.post('/users/courses/:courseId', authenticateJwt ,async(req, res) => {
   const course = await Course.findById(req.params.courseId)
   if (course){
