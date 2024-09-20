@@ -16,7 +16,7 @@ let arr  = [1,2,3,4,5,6,2]
 
 // using map
 // it will not return the array we have to store it in another variable
-doubleArr = arr.map((element) => element * 2) 
-console.log(doubleArr)
+// doubleArr = arr.map((element) => element * 2) 
+// console.log(doubleArr)
 
 // console.log(multipleBy2([1,2,3,4,5,6,2]))
