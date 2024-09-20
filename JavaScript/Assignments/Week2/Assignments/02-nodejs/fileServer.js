@@ -21,8 +21,10 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3000
+const cors = require('cors')
 const bodyParser = require('body-parser');
 
+app.use(cors())
 app.use(bodyParser.json());
 
 const filesDirectory = "./tests";
@@ -67,8 +69,8 @@ app.get('/file/:filename', (req, res)=>{
   })
 })
 
-// app.listen(port, ()=>{
-//   console.log(`App running on ${port}`)
-// })
+app.listen(port, ()=>{
+  console.log(`App running on ${port}`)
+})
 
-module.exports = app;
+// module.exports = app;
