@@ -1,8 +1,9 @@
-const { error } = require('console');
 const express = require('express');
 const app = express();
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
+const cors = require('cors')
+app.use(cors())
 
 app.use(express.json());
 
