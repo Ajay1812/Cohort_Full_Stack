@@ -31,26 +31,26 @@ This project is a Course Selling Website built using React and nodejs. It allows
 ## Features
 
 - **User Authentication:** Users can sign up and log in.
-- Courses: Users can view a list of available courses.
-- Admin Dashboard:
+- **Courses:** Users can view a list of available courses.
+- **Admin Dashboard:**
   - Add, update, and delete courses.
   - Manage course details including title, description, price, and more.
   - MongoDB Integration: All course and user data is stored in MongoDB.
 
 ## Technologies Used
 
-- Frontend:
+- **Frontend:**
   - HTML, CSS, JavaScript
   - React.js for building UI components
-- Backend:
+- **Backend:**
   - Node.js and Express.js for server-side logic
   - MongoDB as the database for storing courses and users
-- Authentication:
+- **Authentication:**
   - JWT (JSON Web Tokens) for user authentication and authorization
-- State Management:
+- **State Management:**
   - React Context API for managing global state
-- Axios: For making HTTP requests to the backend
-- Material-UI: For UI components like tables, dialog boxes, etc.
+- **Axios:** For making HTTP requests to the backend
+- **Material-UI:** For UI components like tables, dialog boxes, etc.
 
 ## Installation
 
