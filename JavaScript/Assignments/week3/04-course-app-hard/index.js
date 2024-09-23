@@ -1,10 +1,11 @@
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const app = express();
 require('dotenv').config();
 app.use(express.json());
-
+app.use(cors())
 const SECRET = "QWsaxdwafhgqwWSDsad"
 
 // let ADMINS = [];
