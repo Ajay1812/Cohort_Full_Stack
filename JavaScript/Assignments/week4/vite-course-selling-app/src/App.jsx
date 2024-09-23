@@ -10,6 +10,8 @@ import { Appbar } from './components/admin/Appbar';
 
 import { AddCourse } from './components/admin/AddCourse'
 import { GetCourses } from './components/admin/GetCourses'
+
+import { Courses } from './components/user/Courses'
 // import { PurchasedCourse } from './components/PurchasedCourse';
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
       {isUserRoute ? <AppbarUser /> : <Appbar />}
       <Routes>
         <Route path='getcourse' element={<GetCourses />} />
+        <Route path='users/courses' element={<Courses />} />
         <Route path='/addcourse' element={<AddCourse />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

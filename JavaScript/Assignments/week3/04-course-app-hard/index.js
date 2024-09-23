@@ -6,7 +6,6 @@ const app = express();
 require("dotenv").config();
 app.use(express.json());
 app.use(cors());
-const SECRET = "QWsaxdwafhgqwWSDsad";
 
 // let ADMINS = [];
 // let USERS = [];
@@ -56,6 +55,7 @@ const authenticateJwt = (req, res, next) => {
 // Connect to MongoDB
 const mongoUser = process.env.MONGO_USER;
 const mongoPassword = process.env.MONGO_PASSWORD;
+const SECRET = process.env.SECRET
 mongoose.connect(
   `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.fyfyk.mongodb.net/courses`
 );

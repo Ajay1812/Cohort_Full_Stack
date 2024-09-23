@@ -16,7 +16,7 @@ export function GetCourses() {
         }
       });
       // console.log('Full response:', response);
-      console.log('Response data:', response.data.courses);
+      // console.log('Response data:', response.data.courses);
       setData(Array.isArray(response.data.courses) ? response.data.courses : []);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,16 +44,14 @@ export function GetCourses() {
                     style={{
                       width: "100%",
                       maxWidth: "320px",
-                      // maxHeight: "500px",
-                      height: "auto",
-                      // padding: "8px",
-                      margin: "10px",
+                      height: "400px", // Set a fixed height for the cards
+                      // padding: "10px", // Padding inside the card
+                      // margin: "10px",
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "space-evenly",
-                      // border: "2px solid red",
-                      borderRadius: "40px",
-                      gap: "10px"
+                      justifyContent: "space-between", // Evenly space items within the card
+                      borderRadius: "20px",
+                      gap: "10px",
                     }}
                     variant="outlined"
                   >

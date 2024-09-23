@@ -57,7 +57,7 @@ export function SignInUser() {
                       if (data.token) {
                         localStorage.setItem('token', data.token)
                         // console.log(data)
-                        navigate('/getcourse')
+                        navigate('/users/courses')
                       }
                       else {
                         alert('Invalid credentials');
