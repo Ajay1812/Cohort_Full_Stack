@@ -35,9 +35,9 @@ export function DropDownMenu({ onChange }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={createHandleMenuClick('2999', onChange, handleClose)}>2999 INR</MenuItem>
-        <MenuItem onClick={createHandleMenuClick('3999', onChange, handleClose)}>3999 INR</MenuItem>
-        <MenuItem onClick={createHandleMenuClick('4999', onChange, handleClose)}>4999 INR</MenuItem>
+        <MenuItem onClick={createHandleMenuClick('2999', onChange, handleClose)}>₹ 2999</MenuItem>
+        <MenuItem onClick={createHandleMenuClick('3999', onChange, handleClose)}>₹ 3999</MenuItem>
+        <MenuItem onClick={createHandleMenuClick('4999', onChange, handleClose)}>₹ 4999</MenuItem>
       </Menu>
     </div>
   );

@@ -2,8 +2,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Card, Typography } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignIn() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   return (
@@ -52,9 +54,14 @@ export function SignIn() {
                 .then((res) => {
                   res.json()
                     .then((data) => {
-                      localStorage.setItem('token', data.token)
-                      console.log(data)
-                      // alert('Logged in successfully')
+                      if (data.token) {
+                        localStorage.setItem('token', data.token)
+                        // console.log(data)
+                        navigate('/getcourse')
+                      }
+                      else {
+                        alert('Invalid credentials');
+                      }
                     })
                 })
             }}>
