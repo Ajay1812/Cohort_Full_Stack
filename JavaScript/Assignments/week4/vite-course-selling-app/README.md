@@ -46,7 +46,7 @@ This project is a Course Selling Website built using React and nodejs. It allows
   - Node.js and Express.js for server-side logic
   - MongoDB as the database for storing courses and users
 - Authentication:
-- JWT (JSON Web Tokens) for user authentication and authorization
+  - JWT (JSON Web Tokens) for user authentication and authorization
 - State Management:
   - React Context API for managing global state
 - Axios: For making HTTP requests to the backend
@@ -74,8 +74,8 @@ This project is a Course Selling Website built using React and nodejs. It allows
 - Create a .env file in the root directory and add your MongoDB connection string:
 
 ```bash
-    MONGO_USER=your-mongodb-uri
-    MONGO_PASSWORD=your-secret-key
+    MONGO_USER=your-mongodb-user
+    MONGO_PASSWORD=your-secret-password
     SECRET_JWT=your-secret
 ```
 
