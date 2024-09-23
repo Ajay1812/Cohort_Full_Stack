@@ -4,7 +4,8 @@ This project is a Course Selling Website built using React and nodejs. It allows
 
 ## Demo Screenshots
 
-Signup Page
+### Signup Page
+
 <img width="807" alt="Signup" src="https://github.com/user-attachments/assets/1131d810-2ab7-4e5f-8ab0-85b9ae60e585">
 
 ### Signin Page
