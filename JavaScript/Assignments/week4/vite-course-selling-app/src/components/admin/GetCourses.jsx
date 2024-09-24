@@ -3,10 +3,10 @@ import { Card, Typography, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 export function GetCourses() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+
   const fetchInfo = async () => {
     try {
       const response = await axios.get('http://localhost:3000/admin/courses/', {
@@ -15,11 +15,36 @@ export function GetCourses() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      // console.log('Full response:', response);
-      // console.log('Response data:', response.data.courses);
-      setData(Array.isArray(response.data.courses) ? response.data.courses : []);
+      const courses = Array.isArray(response.data.courses) ? response.data.courses : [];
+      console.log(courses)
+      const coursesWithImages = await Promise.all(courses.map(async (course) => {
+        const image = await fetchImage(course._id); // Get the image for each course
+        return { ...course, image }; // Add the fetched image to the course object
+      }));
+      setData(coursesWithImages); // Update the state with courses and their images
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchImage = async (courseId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/admin/courses/image/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        responseType: 'arraybuffer', // Set to arraybuffer to handle binary data
+      });
+
+      // Convert binary data to Base64
+      const base64String = btoa(
+        new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
+      );
+
+      return `data:image/jpeg;base64,${base64String}`; // Return the Base64 string with the correct prefix
+    } catch (error) {
+      console.error("Error fetching image:", error);
+      return null; // Return null if there's an error
     }
   };
 
@@ -34,50 +59,45 @@ export function GetCourses() {
       </div>
       <div style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
         {
-          data.map((course) => {
-            // console.log(course.imageLink);
-            return (
-              <div key={course.id} style={{ flexBasis: "calc(25% - 20px)", boxSizing: "border-box" }}>
-                <br />
-                <div>
-                  <Card
-                    style={{
-                      width: "100%",
-                      maxWidth: "320px",
-                      height: "400px", // Set a fixed height for the cards
-                      // padding: "10px", // Padding inside the card
-                      // margin: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between", // Evenly space items within the card
-                      borderRadius: "20px",
-                      gap: "10px",
-                    }}
-                    variant="outlined"
-                  >
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <img src={course.imageLink} alt={course.title} style={{ width: '100%', height: 'auto' }} />
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Typography variant="h5">{course.title}</Typography>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "center", textAlign: "center", letterSpacing: 1, textWrap: "wrap" }}>
-                      <Typography variant="p">{course.description}</Typography>
-                    </div>
-                    <div style={{ marginLeft: "1.2rem" }}>
-                      <Typography variant="h6">₹{course.price}</Typography>
-                    </div>
-                    <Button variant="contained" onClick={() => {
-                      navigate('/purchasedcourses', {
-                        state: { courseId: course._id },
-                        replace: true
-                      })
-                    }}>Buy</Button>
-                  </Card>
-                </div>
-              </div >
-            );
-          })
+          data.map((course) => (
+            <div key={course._id} style={{ flexBasis: "calc(25% - 20px)", boxSizing: "border-box" }}>
+              <br />
+              <div>
+                <Card
+                  style={{
+                    width: "100%",
+                    maxWidth: "320px",
+                    height: "500px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    borderRadius: "20px",
+                    gap: "10px",
+                  }}
+                  variant="outlined"
+                >
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <img src={course.image} alt={course.title} style={{ width: '100%', height: 'auto', maxHeight: "300px" }} />
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Typography variant="h5">{course.title}</Typography>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "center", textAlign: "center", letterSpacing: 1 }}>
+                    <Typography variant="body1">{course.description}</Typography>
+                  </div>
+                  <div style={{ marginLeft: "1.2rem" }}>
+                    <Typography variant="h6">₹{course.price}</Typography>
+                  </div>
+                  <Button variant="contained" onClick={() => {
+                    navigate('/purchasedcourses', {
+                      state: { courseId: course._id },
+                      replace: true
+                    });
+                  }}>Buy</Button>
+                </Card>
+              </div>
+            </div>
+          ))
         }
       </div >
     </>

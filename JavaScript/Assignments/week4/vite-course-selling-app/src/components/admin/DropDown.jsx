@@ -34,10 +34,21 @@ export function DropDownMenu({ onChange }) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        style={{
+          borderRadius: "8px"
+        }}
       >
-        <MenuItem onClick={createHandleMenuClick('2999', onChange, handleClose)}>₹ 2999</MenuItem>
-        <MenuItem onClick={createHandleMenuClick('3999', onChange, handleClose)}>₹ 3999</MenuItem>
-        <MenuItem onClick={createHandleMenuClick('4999', onChange, handleClose)}>₹ 4999</MenuItem>
+        <div style={{
+          padding: '5px 10px',
+          '&:hover': {
+            backgroundColor: '#f50057',
+            color: 'white',
+          },
+        }}>
+          <MenuItem onClick={createHandleMenuClick('2999', onChange, handleClose)}>₹ 2999</MenuItem>
+          <MenuItem onClick={createHandleMenuClick('3999', onChange, handleClose)}>₹ 3999</MenuItem>
+          <MenuItem onClick={createHandleMenuClick('4999', onChange, handleClose)}>₹ 4999</MenuItem>
+        </div>
       </Menu>
     </div>
   );

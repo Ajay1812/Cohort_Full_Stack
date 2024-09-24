@@ -18,12 +18,13 @@ export function SignIn() {
           justifyContent: "center",
         }}
       >
-        <Typography variant={"h6"}>
+        <Typography variant={"h4"}>
           Welcome to Coursera. Sign in below
         </Typography>
       </div>
+      <br /> <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px" }} variant="outlined">
+        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
           <TextField
             onChange={(e) => setEmail(e.target.value)}
             fullWidth={true}

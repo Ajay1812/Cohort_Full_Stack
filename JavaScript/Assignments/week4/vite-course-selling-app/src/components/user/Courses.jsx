@@ -15,7 +15,7 @@ export function Courses() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      console.log('Response data:', response.data.courses);
+      // console.log('Response data:', response.data.courses);
       setData(Array.isArray(response.data.courses) ? response.data.courses : []);
     } catch (error) {
       console.error("Error fetching data:", error);

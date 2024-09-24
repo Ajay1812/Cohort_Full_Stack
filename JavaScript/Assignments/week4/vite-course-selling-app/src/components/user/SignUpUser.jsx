@@ -2,9 +2,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Card, Typography } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 // import { PurchasedCourse } from "./PurchasedCourse";
 
 export function SignUpUser() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,12 +24,25 @@ export function SignUpUser() {
           justifyContent: "center",
         }}
       >
-        <Typography variant={"h6"}>
+        <Typography variant={"h4"}>
           Welcome to Coursera. Sign up below
         </Typography>
       </div>
+      <br /> <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px" }} variant="outlined">
+        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
+          <div style={{ width: '100%', display: 'flex', justifyContent: "center" }}><GoogleLogin
+            onSuccess={credentialResponse => {
+              const decoded = jwtDecode(credentialResponse.credential);
+              if (decoded.email_verified === true) {
+                navigate('/users/courses')
+              }
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          /></div>
+          <br />
           <TextField
             onChange={(e) => {
               // console.log(e)
@@ -67,6 +84,7 @@ export function SignUpUser() {
                     console.log(res)
                     res.json().then((data) => {
                       localStorage.setItem('token', data.token)
+                      navigate('/users/login')
                     });
                   });
               }}
