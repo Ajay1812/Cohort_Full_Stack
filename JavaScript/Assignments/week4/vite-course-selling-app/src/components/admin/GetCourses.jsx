@@ -6,24 +6,26 @@ import { useNavigate } from "react-router-dom";
 export function GetCourses() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null); // State to hold error message
 
   const fetchInfo = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/admin/courses/', {
+      const response = await axios.get('http://localhost:3000/admin/courses', {
         headers: {
           'Content-Type': "application/json",
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
+
       const courses = Array.isArray(response.data.courses) ? response.data.courses : [];
-      console.log(courses)
       const coursesWithImages = await Promise.all(courses.map(async (course) => {
-        const image = await fetchImage(course._id); // Get the image for each course
-        return { ...course, image }; // Add the fetched image to the course object
+        const image = await fetchImage(course._id);
+        return { ...course, image };
       }));
-      setData(coursesWithImages); // Update the state with courses and their images
+      setData(coursesWithImages);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setError("Failed to fetch courses. Please check your permissions or try again later."); // Set error message
     }
   };
 
@@ -33,18 +35,17 @@ export function GetCourses() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        responseType: 'arraybuffer', // Set to arraybuffer to handle binary data
+        responseType: 'arraybuffer',
       });
 
-      // Convert binary data to Base64
       const base64String = btoa(
         new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
 
-      return `data:image/jpeg;base64,${base64String}`; // Return the Base64 string with the correct prefix
+      return `data:image/jpeg;base64,${base64String}`;
     } catch (error) {
       console.error("Error fetching image:", error);
-      return null; // Return null if there's an error
+      return null;
     }
   };
 
@@ -54,10 +55,10 @@ export function GetCourses() {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "2.5rem" }}>
         <Typography variant="h3">Courses</Typography>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", marginTop: "2.5rem" }}>
         {
           data.map((course) => (
             <div key={course._id} style={{ flexBasis: "calc(25% - 20px)", boxSizing: "border-box" }}>
@@ -99,7 +100,7 @@ export function GetCourses() {
             </div>
           ))
         }
-      </div >
+      </div>
     </>
   );
 }

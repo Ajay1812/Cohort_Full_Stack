@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { SignIn } from './components/admin/SignIn';
 import { SignUp } from './components/admin/SignUp';
 
-import { SignUpUser } from './components/user/SignUpUser';
 import { SignInUser } from './components/user/SignInUser';
+import { SignUpUser } from './components/user/SignUpUser';
 
 import { AppbarUser } from './components/user/AppbarUser';
 import { Appbar } from './components/admin/Appbar';

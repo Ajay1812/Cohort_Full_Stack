@@ -83,6 +83,17 @@ mongoose.connect(
 //   Admin.findOne({username}).then(callback)
 // });
 
+app.get('/admin/me', authenticateJwt, async (req, res) => {
+    const username = req.user.username; 
+    const admin = await Admin.findOne({ username });
+    if (admin) {
+      res.status(201).json({ username: admin.username });
+    } else {
+      res.status(403).json({ message: "Admin not found" });
+    }
+  } );
+
+
 app.post("/admin/signup", async (req, res) => {
   const { username, password } = req.body;
   const admin = await Admin.findOne({ username });

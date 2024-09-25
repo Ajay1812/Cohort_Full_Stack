@@ -42,7 +42,7 @@ export function AddCourse() {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "1.5rem" }}>
         <Typography variant='h4'>Add Courses</Typography>
       </div>
       <br /><br />
