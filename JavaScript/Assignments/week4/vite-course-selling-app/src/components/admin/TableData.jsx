@@ -124,55 +124,57 @@ export function CourseTable({ refresh }) {
 
   return (
     <div style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead style={{ background: "#003366" }}>
-            <TableRow>
-              <TableCell style={{ color: "white" }}>ID</TableCell>
-              <TableCell style={{ color: "white" }}>Name</TableCell>
-              <TableCell style={{ color: "white" }}>Description</TableCell>
-              <TableCell style={{ color: "white" }}>Image ( jpeg )</TableCell>
-              <TableCell style={{ color: "white" }}>Published</TableCell>
-              <TableCell style={{ color: "white" }}>Price</TableCell>
-              <TableCell style={{ color: "white" }}>Edit</TableCell>
-              <TableCell style={{ color: "white" }}>Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* {console.log(data)} */}
-            {data.map((course, index) => (
-              <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
-                <TableCell>{course._id}</TableCell>
-                <TableCell>{course.title}</TableCell>
-                <TableCell>{course.description}</TableCell>
-                <TableCell>
-                  {course.image ? (
-                    <img
-                      src={`data:image/jpeg;base64,${course.image}`}  // Ensure this is valid base64
-                      alt={course.title}
-                      style={{ width: '50px', height: '50px' }}
-                    />
-                  ) : (
-                    <span>No Image Available</span>
-                  )}
-                </TableCell>
-                <TableCell>{course.published ? JSON.stringify(course.published) : "Not Published"}</TableCell>
-                <TableCell>₹{course.price}</TableCell>
-                <TableCell>
-                  <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
-                    Update
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button variant="contained" color="error" onClick={() => handleDelete(course._id)}>
-                    Delete
-                  </Button>
-                </TableCell>
+      <div style={{ width: "80vw" }}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead style={{ background: "#003366" }}>
+              <TableRow>
+                <TableCell style={{ color: "white" }}>ID</TableCell>
+                <TableCell style={{ color: "white" }}>Name</TableCell>
+                <TableCell style={{ color: "white" }}>Description</TableCell>
+                <TableCell style={{ color: "white" }}>Image</TableCell>
+                <TableCell style={{ color: "white" }}>Published</TableCell>
+                <TableCell style={{ color: "white" }}>Price</TableCell>
+                <TableCell style={{ color: "white" }}>Edit</TableCell>
+                <TableCell style={{ color: "white" }}>Delete</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {/* {console.log(data)} */}
+              {data.map((course, index) => (
+                <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
+                  <TableCell>{course._id}</TableCell>
+                  <TableCell>{course.title}</TableCell>
+                  <TableCell>{course.description}</TableCell>
+                  <TableCell>
+                    {course.image ? (
+                      <img
+                        src={`data:image/jpeg;base64,${course.image}`}  // Ensure this is valid base64
+                        alt={course.title}
+                        style={{ width: '50px', height: '50px' }}
+                      />
+                    ) : (
+                      <span>No Image Available</span>
+                    )}
+                  </TableCell>
+                  <TableCell>{course.published ? JSON.stringify(course.published) : "Not Published"}</TableCell>
+                  <TableCell>₹{course.price}</TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
+                      Update
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="error" onClick={() => handleDelete(course._id)}>
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
 
       {/* Update Dialog */}
       <Dialog open={open} onClose={handleUpdateClose}>
