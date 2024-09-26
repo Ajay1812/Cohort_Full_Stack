@@ -90,8 +90,7 @@ export function GetCourses() {
                     <Typography variant="h6">₹{course.price}</Typography>
                   </div>
                   <Button variant="contained" onClick={() => {
-                    navigate('/purchasedcourses', {
-                      state: { courseId: course._id },
+                    navigate(`/getcourse/${course._id}`, {
                       replace: true
                     });
                   }}>Buy</Button>
