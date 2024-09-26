@@ -3,7 +3,7 @@ import { Card, Typography, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export function Courses() {
+export function UserCourses() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 

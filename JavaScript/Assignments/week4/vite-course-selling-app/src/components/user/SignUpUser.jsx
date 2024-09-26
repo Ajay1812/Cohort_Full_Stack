@@ -3,8 +3,8 @@ import TextField from "@mui/material/TextField";
 import { Card, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode";
+// import { GoogleLogin } from '@react-oauth/google';
+// import { jwtDecode } from "jwt-decode";
 // import { PurchasedCourse } from "./PurchasedCourse";
 
 export function SignUpUser() {
@@ -31,7 +31,8 @@ export function SignUpUser() {
       <br /> <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
-          <div style={{ width: '100%', display: 'flex', justifyContent: "center" }}><GoogleLogin
+          {/* <div style={{ width: '100%', display: 'flex', justifyContent: "center" }}>
+            <GoogleLogin
             onSuccess={credentialResponse => {
               const decoded = jwtDecode(credentialResponse.credential);
               if (decoded.email_verified === true) {
@@ -41,7 +42,7 @@ export function SignUpUser() {
             onError={() => {
               console.log('Login Failed');
             }}
-          /></div>
+          /></div> */}
           <br />
           <TextField
             onChange={(e) => {

@@ -16,6 +16,7 @@ export function AddCourse() {
   };
 
   const handleAddCourse = async () => {
+    alert('Add course')
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);

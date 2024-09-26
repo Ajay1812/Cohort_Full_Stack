@@ -8,6 +8,7 @@ export function SignIn() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   return (
     <div>
       <div
@@ -19,27 +20,31 @@ export function SignIn() {
         }}
       >
         <Typography variant={"h4"}>
-          Welcome to Coursera. Sign in below
+          Welcome to Coursera!
         </Typography>
       </div>
       <br /> <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
           <TextField
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              // console.log(e)
+              setEmail(e.target.value)
+            }}
             fullWidth={true}
-            id="outlined-basic"
             label="Email"
             variant="outlined"
           />
           <br /> <br />
           <TextField
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              // console.log(e)
+              setPassword(e.target.value)
+            }}
             fullWidth={true}
-            id="outlined-basic"
             label="Password"
             variant="outlined"
-            type="password"
+            type={"password"}
           />
           <br /> <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -58,7 +63,8 @@ export function SignIn() {
                       if (data.token) {
                         localStorage.setItem('token', data.token)
                         // console.log(data)
-                        navigate('/getcourse')
+                        window.location = '/getcourse'
+                        // navigate('/getcourse')
                       }
                       else {
                         alert('Invalid credentials');

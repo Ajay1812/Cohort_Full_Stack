@@ -138,6 +138,16 @@ app.post("/admin/courses", authenticateJwt,upload.single('image'), async (req, r
     .status(201)
     .json({ message: "Course created successfully", courseId: course.id });
 });
+// get particular course
+app.get("/admin/courses/:courseId", authenticateJwt, async (req, res) => {
+  const course = await Course.findById(req.params.courseId);
+  if(course){
+    res.status(201).json({course})
+  }else{
+    res.status(403).json({message: "Course not found"})
+  }
+});
+
 // get image
 app.get("/admin/courses/image/:courseId", async (req, res) => {
   const course = await Course.findById(req.params.courseId);

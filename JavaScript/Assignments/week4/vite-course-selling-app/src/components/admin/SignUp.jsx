@@ -1,8 +1,6 @@
 import { Card, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode";
 
 export function SignUp() {
   const navigate = useNavigate('')
@@ -22,23 +20,12 @@ export function SignUp() {
         }}
       >
         <Typography variant={"h4"} >
-          Welcome to Coursera. Sign up below
+          Welcome to Coursera!
         </Typography>
       </div>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
-          <div style={{ width: '100%', display: 'flex', justifyContent: "center" }}><GoogleLogin
-            onSuccess={credentialResponse => {
-              const decoded = jwtDecode(credentialResponse.credential);
-              if (decoded.email_verified === true) {
-                navigate('/getcourse')
-              }
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-          /></div>
           <br />
           <TextField
             onChange={(e) => {

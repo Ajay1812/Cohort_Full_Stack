@@ -10,8 +10,10 @@ import { Appbar } from './components/admin/Appbar';
 
 import { AddCourse } from './components/admin/AddCourse'
 import { GetCourses } from './components/admin/GetCourses'
+import { CourseDetails } from './components/admin/CourseDetails'
 
-import { Courses } from './components/user/Courses'
+import { UserCourses } from './components/user/UserCourses'
+
 // import { PurchasedCourse } from './components/PurchasedCourse';
 
 function App() {
@@ -21,12 +23,15 @@ function App() {
     <div style={{ width: "100vw", height: "100vh", backgroundColor: "#eeeeee" }}>
       {isUserRoute ? <AppbarUser /> : <Appbar />}
       <Routes>
+        {/* ADMIN */}
         <Route path='getcourse' element={<GetCourses />} />
-        <Route path='users/courses' element={<Courses />} />
+        <Route path='getcourse/:courseId' element={<CourseDetails />} />
         <Route path='/addcourse' element={<AddCourse />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
+        {/* USER */}
+        <Route path='users/courses' element={<UserCourses />} />
         <Route path="/users/signup" element={<SignUpUser />} />
         <Route path="/users/login" element={<SignInUser />} />
         {/* <Route path="/purchasedcourses" element={<PurchasedCourse />} /> */}
