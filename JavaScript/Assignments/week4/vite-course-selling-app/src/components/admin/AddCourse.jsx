@@ -1,27 +1,33 @@
-import { TextField, Button, Card, Typography } from '@mui/material';
+import { TextField, Button, Card, Typography, Checkbox, FormControlLabel, Drawer, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { DropDownMenu } from './DropDown';
 import { CourseTable } from './TableData';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export function AddCourse() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [file, setFile] = useState(null);
+  const [published, setPublished] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State for sidebar toggle
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
+  const handlePublishedChange = (event) => {
+    setPublished(event.target.checked);
+  };
+
   const handleAddCourse = async () => {
-    alert('Add course')
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
     formData.append('price', price ? parseInt(price) : null);
-    formData.append('published', true);
+    formData.append('published', published);
     if (file) {
       formData.append('image', file);
     }
@@ -38,77 +44,96 @@ export function AddCourse() {
     setTitle(''); // Clear input fields
     setDescription('');
     setPrice('');
+    setPublished(false);
     setFile(null); // Clear the file input
+    setSidebarOpen(false); // Close sidebar after submitting
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "1.5rem" }}>
-        <Typography variant='h4'>Add Courses</Typography>
+      <div style={{ display: "flex", justifyContent: "flex-start", marginTop: "1.5rem" }}>
+        <IconButton
+          onClick={toggleSidebar}
+          color="primary"
+          aria-label="open sidebar"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant='h4' style={{ marginLeft: "32rem" }}>Courses Management</Typography>
       </div>
       <br /><br />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
-          <TextField
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            fullWidth
-            label="Title"
-            variant="outlined"
-          />
-          <br /> <br />
-          <TextField
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            label="Description"
-            variant="outlined"
-          />
-          <br /> <br />
-          <DropDownMenu
-            onChange={(value) => setPrice(value)}
-          />
-          <br />
 
-          {/* Hidden file input */}
-          <input
-            type="file"
-            accept="image/*"
-            id="file-upload"
-            style={{ display: 'none' }} // Hide the input
-            onChange={handleFileChange} // Add file input handling
-          />
+      {/* Sidebar for Adding Course */}
+      <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
+        <div style={{ width: "300px", padding: "20px", marginTop: "2.5rem" }}>
+          <Typography textAlign="center" variant='h4'>Add Course</Typography>
+          <Card style={{ padding: "20px", marginTop: "20px", border: "1px solid black", borderRadius: "10px" }} variant="outlined">
+            <TextField
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              fullWidth
+              label="Title"
+              variant="outlined"
+              margin="normal"
+            />
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              label="Description"
+              variant="outlined"
+              margin="normal"
+            />
+            <DropDownMenu
+              onChange={(value) => setPrice(value)}
+            />
+            <br /><br />
+            <input
+              type="file"
+              accept="image/*"
+              id="file-upload"
+              style={{ display: 'none' }} // Hidden file input
+              onChange={handleFileChange}
+            />
+            <label htmlFor="file-upload">
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<CloudUploadIcon />}
+                sx={{
+                  bgcolor: '#333',
+                  color: 'white',
+                }}
+              >
+                Upload Image
+              </Button>
+            </label>
+            <br /><br />
+            <FormControlLabel
+              control={<Checkbox checked={published} onChange={handlePublishedChange} />}
+              label="Published"
+            />
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+              <Button
+                size="large"
+                variant="contained"
+                onClick={handleAddCourse}
+                sx={{
+                  bgcolor: 'primary.dark',
+                  color: 'white',
+                }}
+              >
+                Add Course
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </Drawer>
 
-          {/* Label wraps the button to trigger file input */}
-          <label htmlFor="file-upload">
-            <Button
-              variant="contained"
-              component="span"
-              startIcon={<CloudUploadIcon />}
-              sx={{
-                bgcolor: '#333',
-                color: 'white',
-              }}
-            >
-              Upload Image
-            </Button>
-          </label>
-          <br /><br />
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              size="large"
-              variant="contained"
-              onClick={handleAddCourse} // Use the new handler
-              sx={{
-                bgcolor: 'primary.dark',
-                color: 'white',
-              }}
-            >
-              Add Course
-            </Button>
-          </div>
-        </Card>
-      </div >
       <br /><br />
       <div style={{ width: "100vw" }}>
         <CourseTable refresh={refresh} /> {/* Pass refresh state */}

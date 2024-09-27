@@ -18,39 +18,27 @@ export function CourseDetails() {
           },
         }
       );
-      setData(response.data.course);
+      const course = response.data.course;
+      // console.log(course.image)
+      setData(course);
+
+      // Convert the image binary data to base64, if image is in array buffer form
+      if (course.image && course.image.type === 'Buffer') {
+        const base64String = btoa(
+          new Uint8Array(course.image.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setImageSrc(`data:image/jpeg;base64,${base64String}`);
+      }
     } catch (error) {
       console.error("Error fetching course details:", error);
     }
   };
 
-  const fetchImage = async (courseId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/admin/courses/image/${courseId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          responseType: "arraybuffer",
-        }
-      );
-
-      const base64String = btoa(
-        new Uint8Array(response.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ""
-        )
-      );
-      setImageSrc(`data:image/jpeg;base64,${base64String}`);
-    } catch (error) {
-      console.error("Error fetching image:", error);
-    }
-  };
-
   useEffect(() => {
     fetchCourseDetails();
-    fetchImage(courseId);
   }, [courseId]);
 
   return (

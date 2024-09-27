@@ -62,7 +62,8 @@ const mongoUser = process.env.MONGO_USER;
 const mongoPassword = process.env.MONGO_PASSWORD;
 const SECRET = process.env.SECRET
 mongoose.connect(
-  `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.fyfyk.mongodb.net/courses`
+  // `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.fyfyk.mongodb.net/courses`
+  `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.ytrig.mongodb.net/courses`
 );
 
 // Admin routes
@@ -124,7 +125,12 @@ app.post("/admin/login", async (req, res) => {
 });
 
 // Create and update courses
-app.post("/admin/courses", authenticateJwt,upload.single('image'), async (req, res) => {
+app.post("/admin/courses", authenticateJwt, upload.single('image'), async (req, res) => {
+  console.log(req.file); // Add this line
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
   const courseData = {
     title: req.body.title,
     description: req.body.description,
@@ -138,6 +144,7 @@ app.post("/admin/courses", authenticateJwt,upload.single('image'), async (req, r
     .status(201)
     .json({ message: "Course created successfully", courseId: course.id });
 });
+
 // get particular course
 app.get("/admin/courses/:courseId", authenticateJwt, async (req, res) => {
   const course = await Course.findById(req.params.courseId);
