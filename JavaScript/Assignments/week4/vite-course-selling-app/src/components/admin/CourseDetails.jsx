@@ -6,7 +6,6 @@ import axios from "axios";
 export function CourseDetails() {
   const { courseId } = useParams();
   const [data, setData] = useState({});
-  const [imageSrc, setImageSrc] = useState("");
 
   const fetchCourseDetails = async () => {
     try {
@@ -19,19 +18,7 @@ export function CourseDetails() {
         }
       );
       const course = response.data.course;
-      // console.log(course.image)
       setData(course);
-
-      // Convert the image binary data to base64, if image is in array buffer form
-      if (course.image && course.image.type === 'Buffer') {
-        const base64String = btoa(
-          new Uint8Array(course.image.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
-        );
-        setImageSrc(`data:image/jpeg;base64,${base64String}`);
-      }
     } catch (error) {
       console.error("Error fetching course details:", error);
     }
@@ -57,10 +44,9 @@ export function CourseDetails() {
         variant="outlined"
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
-          {/* Use the fetched image */}
-          {imageSrc && (
+          {data.image && (
             <img
-              src={imageSrc}
+              src={`${data.image}`} // Adjusted to use local assets folder
               alt={data.title}
               style={{ width: "100%", height: "auto", maxHeight: "300px" }}
             />

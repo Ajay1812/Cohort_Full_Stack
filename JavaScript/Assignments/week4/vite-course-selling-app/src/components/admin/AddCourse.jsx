@@ -12,10 +12,15 @@ export function AddCourse() {
   const [file, setFile] = useState(null);
   const [published, setPublished] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // State for sidebar toggle
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState(''); // New state to hold the image URL
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
+
+    // Create a local URL for the uploaded image
+    const fileUrl = URL.createObjectURL(event.target.files[0]);
+    setImageUrl(fileUrl);
   };
 
   const handlePublishedChange = (event) => {
@@ -35,7 +40,7 @@ export function AddCourse() {
     await fetch('http://localhost:3000/admin/courses', {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}` // Do not set Content-Type; the browser will set it automatically for FormData
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: formData
     });
@@ -46,6 +51,7 @@ export function AddCourse() {
     setPrice('');
     setPublished(false);
     setFile(null); // Clear the file input
+    setImageUrl(''); // Clear the image URL
     setSidebarOpen(false); // Close sidebar after submitting
   };
 
@@ -113,6 +119,14 @@ export function AddCourse() {
               </Button>
             </label>
             <br /><br />
+
+            {/* Display the uploaded image */}
+            {imageUrl && (
+              <div>
+                <img src={imageUrl} alt="Uploaded Preview" style={{ width: '100%', height: 'auto', marginTop: '10px' }} />
+              </div>
+            )}
+
             <FormControlLabel
               control={<Checkbox checked={published} onChange={handlePublishedChange} />}
               label="Published"
@@ -136,7 +150,7 @@ export function AddCourse() {
 
       <br /><br />
       <div style={{ width: "100vw" }}>
-        <CourseTable refresh={refresh} /> {/* Pass refresh state */}
+        <CourseTable refresh={refresh} />
       </div>
     </>
   );

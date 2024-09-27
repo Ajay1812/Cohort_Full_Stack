@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, InputAdornment } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search'; // Import the SearchIcon
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from "react-router-dom";
 
 export function CourseTable({ refresh }) {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // State to handle filtered data
   const [open, setOpen] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // Search term state
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchInfo = async () => {
-    setLoading(true); // Start loader when fetching courses
+    setLoading(true);
     try {
       const response = await axios.get("http://localhost:3000/admin/courses/", {
         headers: {
@@ -22,37 +23,14 @@ export function CourseTable({ refresh }) {
         },
       });
       const courses = Array.isArray(response.data.courses) ? response.data.courses : [];
-      const coursesWithImages = await Promise.all(courses.map(async (course) => {
-        const image = await fetchImage(course._id);
-        return { ...course, image };
-      }));
-      setData(coursesWithImages);
-      setFilteredData(coursesWithImages); // Initialize filtered data
+      setData(courses);
+      setFilteredData(courses);
     } catch (error) {
       console.error("Error fetching data:", error.response ? error.response.data : error.message);
     }
-    setLoading(false); // Stop loader once the courses are fetched
-  };
-
-  const fetchImage = async (courseId) => {
-    try {
-      const response = await axios.get(`http://localhost:3000/admin/courses/image/${courseId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        responseType: 'arraybuffer', // Set to arraybuffer to handle binary data
-      });
-
-      // Convert binary data to Base64
-      const base64String = btoa(
-        new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
-      );
-
-      return base64String;
-    } catch (error) {
-      console.error("Error fetching image:", error);
-      return null;
-    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const handleDelete = async (courseId) => {
@@ -168,16 +146,17 @@ export function CourseTable({ refresh }) {
               </TableHead>
               <TableBody>
                 {filteredData.map((course, index) => (
-                  <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
-                    <TableCell>{course._id}</TableCell>
-                    <TableCell>{course.title}</TableCell>
-                    <TableCell>{course.description}</TableCell>
+                  <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white", cursor: 'pointer' }}>
+                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course._id}</TableCell>
+                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.title}</TableCell>
+                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.description}</TableCell>
                     <TableCell>
                       {course.image ? (
                         <img
-                          src={`data:image/jpeg;base64,${course.image}`}
+                          src={`${course.image}`}
                           alt={course.title}
                           style={{ width: '50px', height: '50px' }}
+                          onClick={() => navigate(`/getcourse/${course._id}`)}
                         />
                       ) : (
                         <span>No Image Available</span>
@@ -198,6 +177,7 @@ export function CourseTable({ refresh }) {
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </TableContainer>
         )}
@@ -230,7 +210,6 @@ export function CourseTable({ refresh }) {
                 fullWidth
                 margin="normal"
               />
-              {/* File input for image upload */}
               <input
                 type="file"
                 onChange={handleFileChange}

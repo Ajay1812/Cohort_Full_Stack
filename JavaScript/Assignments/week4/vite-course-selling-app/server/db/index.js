@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-const multer = require('multer')
+const mongoose = require('mongoose');
 
+// Define Mongoose Schemas
 const adminSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -16,16 +16,17 @@ const courseSchema = new mongoose.Schema({
   title: String,
   description: String,
   price: Number,
-  image: Buffer, // storing into buffer
+  image: String, // Storing the relative image path
   published: Boolean,
 });
 
-// Define mongoose models
+// Define Mongoose Models
 const User = mongoose.model("User", userSchema);
 const Admin = mongoose.model("Admin", adminSchema);
 const Course = mongoose.model("Course", courseSchema);
-const upload = multer();
 
 module.exports = {
-  User, Admin, Course, upload
-}
+  User,
+  Admin,
+  Course,
+};

@@ -1,9 +1,23 @@
-const {User, Course, Admin, upload} = require('../db')
+const {User, Course, Admin} = require('../db')
+const multer = require('multer');
+const path = require('path');
 const jwt = require('jsonwebtoken')
 const {SECRET} = require('../middleware/auth')
 const {authenticateJwt} = require('../middleware/auth')
 const express = require('express')
 const router = express.Router() 
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '../assets/'); // Save files in the 'uploads' folder
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;  // Use timestamp to avoid conflicts
+    cb(null, uniqueName);  // Save the file with the unique name
+  }
+});
+
+const upload = multer({ storage });
 
 router.get('/me', authenticateJwt, async (req, res) => {
   const username = req.user.username; 
@@ -46,23 +60,21 @@ router.post("/login", async (req, res) => {
 
 // Create and update courses
 router.post("/courses", authenticateJwt, upload.single('image'), async (req, res) => {
-  console.log(req.file); // Add this line
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
-
+  const imagePath = `/assets/${req.file.filename}`;
   const courseData = {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
-    image: req.file.buffer,  // Store the image binary data
+    image: imagePath,  // Save relative path instead of image buffer
     published: req.body.published,
   };
+  
   const course = new Course(courseData);
   await course.save();
-  res
-    .status(201)
-    .json({ message: "Course created successfully", courseId: course.id });
+  res.status(201).json({ message: "Course created successfully", courseId: course.id });
 });
 
 // get particular course
@@ -94,8 +106,10 @@ router.put("/courses/:courseId", authenticateJwt, upload.single('image'), async 
     price: req.body.price,
     published: req.body.published,
   };
+  // If an image is uploaded, save the new relative path
   if (req.file) {
-    courseData.image = req.file.buffer; // Store the new image binary data if provided
+    const imagePath = `/assets/${req.file.filename}`;
+    courseData.image = imagePath;  // Update relative path if new image uploaded
   }
   const course = await Course.findByIdAndUpdate(req.params.courseId, courseData, {
     new: true,
