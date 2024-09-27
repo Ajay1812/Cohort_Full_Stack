@@ -13,14 +13,22 @@ import { GetCourses } from './components/admin/GetCourses'
 import { CourseDetails } from './components/admin/CourseDetails'
 
 import { UserCourses } from './components/user/UserCourses'
-
 // import { PurchasedCourse } from './components/PurchasedCourse';
+
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 function App() {
   const location = useLocation()
   const isUserRoute = location.pathname.includes('/users/')
   return (
     <div style={{ width: "100vw", height: "100vh", backgroundColor: "#eeeeee" }}>
+
       {isUserRoute ? <AppbarUser /> : <Appbar />}
       <Routes>
         {/* ADMIN */}
@@ -42,8 +50,10 @@ function App() {
 
 export default function Main() {
   return (
-    <Router>
-      <App />
-    </Router>
+    <RecoilRoot>
+      <Router>
+        <App />
+      </Router>
+    </RecoilRoot>
   );
 }
