@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Typography, Button, CircularProgress } from "@mui/material"; // Import CircularProgress
+import { Card, Typography, Button, CircularProgress, Grid } from "@mui/material"; // Import Grid
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +49,7 @@ export function GetCourses() {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "2.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem" }}>
         <Typography variant="h3">Courses</Typography>
       </div>
       {loading ? (
@@ -57,48 +57,44 @@ export function GetCourses() {
           <CircularProgress />
         </div>
       ) : (
-        <div style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", marginTop: "2.5rem" }}>
+        <Grid container spacing={3} justifyContent="center" style={{ marginTop: "2.5rem", gap: "30px" }}>
           {data.map((course) => (
-            <div key={course._id} style={{ flexBasis: "calc(25% - 20px)", boxSizing: "border-box" }}>
-              <br />
-              <div>
-                <Card
-                  style={{
-                    width: "100%",
-                    maxWidth: "320px",
-                    height: "500px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    borderRadius: "20px",
-                    gap: "10px",
-                  }}
-                  variant="outlined"
-                >
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <img src={course.image} alt={course.title} style={{ width: '100%', height: 'auto', maxHeight: "300px" }} />
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Typography variant="h5">{course.title}</Typography>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "center", textAlign: "center", letterSpacing: 1 }}>
-                    <Typography variant="body1">{course.description}</Typography>
-                  </div>
-                  <div style={{ marginLeft: "1.2rem" }}>
-                    <Typography variant="h6">₹{course.price}</Typography>
-                  </div>
-                  <Button variant="contained" onClick={() => {
-                    navigate(`/getcourse/${course._id}`, {
-                      replace: true
-                    });
-                  }}>Buy</Button>
-                </Card>
-              </div>
-            </div>
+            <Grid item key={course._id} xs={8} sm={6} md={4} lg={3}>
+              <Card
+                style={{
+                  width: "100%",
+                  height: "500px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  borderRadius: "20px",
+                  gap: "10px",
+                }}
+                variant="outlined"
+              >
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <img src={course.image} alt={course.title} style={{ width: '100%', height: 'auto', maxHeight: "300px" }} />
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Typography variant="h5">{course.title}</Typography>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", textAlign: "center", letterSpacing: 1 }}>
+                  <Typography variant="body1">{course.description}</Typography>
+                </div>
+                <div style={{ marginLeft: "1.4rem" }}>
+                  <Typography variant="h6">₹{course.price}</Typography>
+                </div>
+                <Button variant="contained" onClick={() => {
+                  navigate(`/getcourse/${course._id}`, {
+                    replace: true
+                  });
+                }}>Buy</Button>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       )}
-      {error && ( // Optional: Display error message if there's an error
+      {error && (
         <div style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
           <Typography variant="body1">{error}</Typography>
         </div>

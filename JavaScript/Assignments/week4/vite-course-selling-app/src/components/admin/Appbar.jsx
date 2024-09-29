@@ -48,6 +48,26 @@ export function Appbar() {
             <>
               <div style={{ marginRight: 10 }}>{email}</div>
               <Button
+                style={{ margin: "0 10px 0 10px" }}
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  navigate('/getcourse')
+                }}
+              >
+                Courses
+              </Button>
+              <Button
+                style={{ margin: "0 10px 0 10px" }}
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  navigate('/addcourse')
+                }}
+              >
+                Add Course
+              </Button>
+              <Button
                 variant="outlined"
                 color="inherit"
                 onClick={handleLogout}

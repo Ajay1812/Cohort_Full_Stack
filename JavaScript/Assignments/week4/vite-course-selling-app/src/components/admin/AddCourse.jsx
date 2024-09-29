@@ -6,9 +6,9 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export function AddCourse() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState();
   const [file, setFile] = useState(null);
   const [published, setPublished] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -61,7 +61,7 @@ export function AddCourse() {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "flex-start", marginTop: "1.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "flex-start", marginTop: "2rem", marginLeft: "1.5rem" }}>
         <IconButton
           onClick={toggleSidebar}
           color="primary"

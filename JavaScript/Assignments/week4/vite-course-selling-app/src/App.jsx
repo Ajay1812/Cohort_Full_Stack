@@ -28,7 +28,6 @@ function App() {
   const isUserRoute = location.pathname.includes('/users/')
   return (
     <div style={{ width: "100vw", height: "100vh", backgroundColor: "#eeeeee" }}>
-
       {isUserRoute ? <AppbarUser /> : <Appbar />}
       <Routes>
         {/* ADMIN */}

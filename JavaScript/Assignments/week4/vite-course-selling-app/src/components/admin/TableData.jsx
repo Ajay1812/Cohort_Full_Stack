@@ -185,7 +185,7 @@ export function CourseTable({ refresh }) {
 
       {/* Update Dialog */}
       <Dialog open={open} onClose={handleUpdateClose}>
-        <DialogTitle>Update Course</DialogTitle>
+        <DialogTitle>Edit Course</DialogTitle>
         <DialogContent>
           {currentCourse && (
             <>
