@@ -9,8 +9,6 @@ export function SignUp() {
 
   return (
     <div>
-      {/* {email}
-      {password} */}
       <div
         style={{
           paddingTop: "150px",
@@ -25,7 +23,7 @@ export function SignUp() {
       </div>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
+        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px", boxShadow: "5.3px 10.6px 10.6px hsl(0deg 0% 0% / 0.34)" }} variant="outlined">
           <br />
           <TextField
             onChange={(e) => {
@@ -75,6 +73,6 @@ export function SignUp() {
           </div>
         </Card>
       </div>
-    </div>
+    </div >
   );
 }

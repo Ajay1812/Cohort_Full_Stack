@@ -49,7 +49,7 @@ export function GetCourses() {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem", height: 'auto' }}>
         <Typography variant="h3">Courses</Typography>
       </div>
       {loading ? (
@@ -68,6 +68,7 @@ export function GetCourses() {
                   flexDirection: "column",
                   justifyContent: "space-between",
                   borderRadius: "20px",
+                  boxShadow: "8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25)",
                   gap: "10px",
                 }}
                 variant="outlined"

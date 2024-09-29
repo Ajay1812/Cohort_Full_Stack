@@ -39,7 +39,7 @@ export function Appbar() {
 
   return (
     <AppBar position="static" color="primary">
-      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar style={{ display: "flex", justifyContent: "space-between", boxShadow: "8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25)" }}>
         <Typography variant="h6" component="div">
           Coursera
         </Typography>
@@ -96,6 +96,6 @@ export function Appbar() {
           )}
         </div>
       </Toolbar>
-    </AppBar>
+    </AppBar >
   );
 }

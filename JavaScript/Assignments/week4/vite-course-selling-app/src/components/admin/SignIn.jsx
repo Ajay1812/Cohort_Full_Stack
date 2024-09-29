@@ -23,9 +23,9 @@ export function SignIn() {
           Welcome to Coursera!
         </Typography>
       </div>
-      <br /> <br />
+      <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px" }} variant="outlined">
+        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px", boxShadow: "5.3px 10.6px 10.6px hsl(0deg 0% 0% / 0.34)" }} variant="outlined">
           <TextField
             onChange={(e) => {
               // console.log(e)

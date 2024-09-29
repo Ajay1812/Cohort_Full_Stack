@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { SignIn } from './components/admin/SignIn';
 import { SignUp } from './components/admin/SignUp';
+import { LandingPage } from './components/admin/LandingPage'
 
 import { SignInUser } from './components/user/SignInUser';
 import { SignUpUser } from './components/user/SignUpUser';
@@ -31,6 +32,7 @@ function App() {
       {isUserRoute ? <AppbarUser /> : <Appbar />}
       <Routes>
         {/* ADMIN */}
+        <Route path='/' element={<LandingPage />} />
         <Route path='getcourse' element={<GetCourses />} />
         <Route path='getcourse/:courseId' element={<CourseDetails />} />
         <Route path='/addcourse' element={<AddCourse />} />
