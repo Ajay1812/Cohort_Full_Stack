@@ -48,7 +48,7 @@ export function Appbar() {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           {email ? (
             <>
-              <div style={{ marginRight: 10 }}>{email}</div>
+              <div style={{ marginRight: 10, fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', letterSpacing: 1.5 }}><u><b>{email.toUpperCase()}</b></u></div>
               <Button
                 style={{ margin: "0 10px 0 10px" }}
                 variant="text"

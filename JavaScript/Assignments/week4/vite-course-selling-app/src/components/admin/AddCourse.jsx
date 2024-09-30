@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { DropDownMenu } from './DropDown';
 import { CourseTable } from './TableData';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import MenuIcon from '@mui/icons-material/Menu';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+// import MenuIcon from '@mui/icons-material/Menu';
 
 export function AddCourse() {
   const [title, setTitle] = useState();
@@ -67,7 +68,7 @@ export function AddCourse() {
           color="primary"
           aria-label="open sidebar"
         >
-          <MenuIcon />
+          <AddBoxOutlinedIcon fontSize='large' />
         </IconButton>
         <Typography variant='h4' style={{ marginLeft: "32rem" }}>Courses Management</Typography>
       </div>

@@ -78,14 +78,14 @@ export function GetCourses() {
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <img src={course.image} alt={course.title} style={{ width: '100%', height: 'auto', maxHeight: "300px" }} />
                 </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{ display: "flex", justifyContent: "left", margin: "0 1rem 0 1rem" }}>
                   <Typography variant="h5">{course.title}</Typography>
                 </div>
-                <div style={{ display: "flex", justifyContent: "center", textAlign: "center", letterSpacing: 1 }}>
+                <div style={{ display: "flex", textAlign: "justify", color: "#808080", letterSpacing: 1, margin: "0 1rem 0 1rem" }}>
                   <Typography variant="body1">{course.description}</Typography>
                 </div>
                 <div style={{ marginLeft: "1.4rem" }}>
-                  <Typography variant="h6">₹{course.price}</Typography>
+                  <Typography color="green" variant="h6">₹{course.price}</Typography>
                 </div>
                 <Button variant="contained" onClick={() => {
                   navigate(`/getcourse/${course._id}`, {
