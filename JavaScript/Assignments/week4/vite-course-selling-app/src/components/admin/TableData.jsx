@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, InputAdornment } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, InputAdornment, Pagination, Stack } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,9 @@ export function CourseTable({ refresh }) {
   const [currentCourse, setCurrentCourse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const fetchInfo = async () => {
     setLoading(true);
@@ -99,11 +102,21 @@ export function CourseTable({ refresh }) {
       course._id.includes(value)
     );
     setFilteredData(filteredCourses);
+    setCurrentPage(1); // Reset to first page on new search
   };
 
   useEffect(() => {
     fetchInfo(); // Fetch course data when component mounts or refresh changes
   }, [refresh]);
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
@@ -134,20 +147,21 @@ export function CourseTable({ refresh }) {
             <Table>
               <TableHead style={{ background: "#003366" }}>
                 <TableRow>
-                  <TableCell style={{ color: "white" }}>ID</TableCell>
+                  <TableCell style={{ color: "white", width: '100px' }}>ID</TableCell>
                   <TableCell style={{ color: "white" }}>Name</TableCell>
                   <TableCell style={{ color: "white" }}>Description</TableCell>
                   <TableCell style={{ color: "white" }}>Image</TableCell>
                   <TableCell style={{ color: "white" }}>Published</TableCell>
                   <TableCell style={{ color: "white" }}>Price</TableCell>
+                  <TableCell style={{ color: "white" }}>Date</TableCell>
                   <TableCell style={{ color: "white" }}>Edit</TableCell>
                   <TableCell style={{ color: "white" }}>Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredData.map((course, index) => (
+                {currentItems.map((course, index) => (
                   <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white", cursor: 'pointer' }}>
-                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course._id}</TableCell>
+                    <TableCell style={{ width: '100px' }} onClick={() => navigate(`/getcourse/${course._id}`)}>{course._id}</TableCell>
                     <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.title}</TableCell>
                     <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.description}</TableCell>
                     <TableCell>
@@ -164,6 +178,7 @@ export function CourseTable({ refresh }) {
                     </TableCell>
                     <TableCell>{course.published ? "Yes" : "No"}</TableCell>
                     <TableCell>₹{course.price}</TableCell>
+                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{new Date(course.createdAt).toLocaleDateString('en-CA')}</TableCell>
                     <TableCell>
                       <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
                         Update
@@ -177,10 +192,19 @@ export function CourseTable({ refresh }) {
                   </TableRow>
                 ))}
               </TableBody>
-
             </Table>
           </TableContainer>
         )}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0 1rem 0' }}>
+        <Pagination
+          count={Math.ceil(filteredData.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+        />
       </div>
 
       {/* Update Dialog */}

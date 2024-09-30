@@ -61,7 +61,7 @@ export function AddCourse() {
   };
 
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <div style={{ display: "flex", justifyContent: "flex-start", marginTop: "2rem", marginLeft: "1.5rem" }}>
         <IconButton
           onClick={toggleSidebar}
@@ -70,9 +70,8 @@ export function AddCourse() {
         >
           <AddBoxOutlinedIcon fontSize='large' />
         </IconButton>
-        <Typography variant='h4' style={{ marginLeft: "32rem" }}>Courses Management</Typography>
+        <Typography variant='h4' style={{ marginLeft: "32rem", marginBottom: "10px" }}>Courses Management</Typography>
       </div>
-      <br /><br />
 
       {/* Sidebar for Adding Course */}
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
@@ -149,10 +148,10 @@ export function AddCourse() {
         </div>
       </Drawer>
 
-      <br /><br />
+      <br />
       <div style={{ width: "100vw" }}>
         <CourseTable refresh={refresh} />
       </div>
-    </>
+    </div>
   );
 }

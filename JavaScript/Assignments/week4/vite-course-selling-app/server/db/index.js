@@ -18,6 +18,10 @@ const courseSchema = new mongoose.Schema({
   price: Number,
   image: String, // Storing the relative image path
   published: Boolean,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Define Mongoose Models

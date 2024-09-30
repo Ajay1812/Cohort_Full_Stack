@@ -29,7 +29,7 @@ export function CourseDetails() {
   }, [courseId]);
 
   return (
-    <div style={{ bottom: 1 }}>
+    <div style={{ bottom: 1, height: "100vh" }}>
       <Card
         style={{
           width: "100%",
