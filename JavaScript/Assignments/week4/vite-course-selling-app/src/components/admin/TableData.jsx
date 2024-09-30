@@ -119,133 +119,133 @@ export function CourseTable({ refresh }) {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-      {/* Search Bar */}
-      <TextField
-        label="Search Courses"
-        variant="outlined"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        style={{ marginBottom: '10px', width: '60%' }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <br /> <br />
-
-      <div style={{ width: "80vw" }}>
-        {loading ? ( // Show loading only while fetching courses initially
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }}>
-            <CircularProgress />
-          </div>
-        ) : (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead style={{ background: "#003366" }}>
-                <TableRow>
-                  <TableCell style={{ color: "white", width: '100px' }}>ID</TableCell>
-                  <TableCell style={{ color: "white" }}>Name</TableCell>
-                  <TableCell style={{ color: "white" }}>Description</TableCell>
-                  <TableCell style={{ color: "white" }}>Image</TableCell>
-                  <TableCell style={{ color: "white" }}>Published</TableCell>
-                  <TableCell style={{ color: "white" }}>Price</TableCell>
-                  <TableCell style={{ color: "white" }}>Date</TableCell>
-                  <TableCell style={{ color: "white" }}>Edit</TableCell>
-                  <TableCell style={{ color: "white" }}>Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentItems.map((course, index) => (
-                  <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white", cursor: 'pointer' }}>
-                    <TableCell style={{ width: '100px' }} onClick={() => navigate(`/getcourse/${course._id}`)}>{course._id}</TableCell>
-                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.title}</TableCell>
-                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.description}</TableCell>
-                    <TableCell>
-                      {course.image ? (
-                        <img
-                          src={`${course.image}`}
-                          alt={course.title}
-                          style={{ width: '50px', height: '50px' }}
-                          onClick={() => navigate(`/getcourse/${course._id}`)}
-                        />
-                      ) : (
-                        <span>No Image Available</span>
-                      )}
-                    </TableCell>
-                    <TableCell>{course.published ? "Yes" : "No"}</TableCell>
-                    <TableCell>₹{course.price}</TableCell>
-                    <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{new Date(course.createdAt).toLocaleDateString('en-CA')}</TableCell>
-                    <TableCell>
-                      <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
-                        Update
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="contained" color="error" onClick={() => handleDelete(course._id)}>
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0 1rem 0' }}>
-        <Pagination
-          count={Math.ceil(filteredData.length / itemsPerPage)}
-          page={currentPage}
-          onChange={handlePageChange}
+    <div style={{}}>
+      <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+        {/* Search Bar */}
+        <TextField
+          label="Search Courses"
           variant="outlined"
-          shape="rounded"
-          size="large"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          style={{ marginBottom: '10px', width: '60%' }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
-      </div>
-
-      {/* Update Dialog */}
-      <Dialog open={open} onClose={handleUpdateClose}>
-        <DialogTitle>Edit Course</DialogTitle>
-        <DialogContent>
-          {currentCourse && (
-            <>
-              <TextField
-                label="Title"
-                value={currentCourse.title}
-                onChange={(e) => setCurrentCourse({ ...currentCourse, title: e.target.value })}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Description"
-                value={currentCourse.description}
-                onChange={(e) => setCurrentCourse({ ...currentCourse, description: e.target.value })}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Price"
-                value={currentCourse.price}
-                onChange={(e) => setCurrentCourse({ ...currentCourse, price: e.target.value })}
-                fullWidth
-                margin="normal"
-              />
-              <input
-                type="file"
-                onChange={handleFileChange}
-              />
-            </>
+        <br /> <br />
+        <div style={{ width: "80vw" }}>
+          {loading ? ( // Show loading only while fetching courses initially
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead style={{ background: "#003366" }}>
+                  <TableRow>
+                    <TableCell style={{ color: "white" }}>ID</TableCell>
+                    <TableCell style={{ color: "white" }}>Name</TableCell>
+                    <TableCell style={{ color: "white" }}>Description</TableCell>
+                    <TableCell style={{ color: "white" }}>Image</TableCell>
+                    <TableCell style={{ color: "white" }}>Published</TableCell>
+                    <TableCell style={{ color: "white" }}>Price</TableCell>
+                    <TableCell style={{ color: "white", width: '100px' }}>Date</TableCell>
+                    <TableCell style={{ color: "white" }}>Edit</TableCell>
+                    <TableCell style={{ color: "white" }}>Delete</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {currentItems.map((course, index) => (
+                    <TableRow key={course._id} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white", cursor: 'pointer' }}>
+                      <TableCell style={{ width: '100px' }} onClick={() => navigate(`/getcourse/${course._id}`)}>{course._id}</TableCell>
+                      <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.title}</TableCell>
+                      <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{course.description}</TableCell>
+                      <TableCell>
+                        {course.image ? (
+                          <img
+                            src={`${course.image}`}
+                            alt={course.title}
+                            style={{ width: '50px', height: '50px' }}
+                            onClick={() => navigate(`/getcourse/${course._id}`)}
+                          />
+                        ) : (
+                          <span>No Image Available</span>
+                        )}
+                      </TableCell>
+                      <TableCell>{course.published ? "Yes" : "No"}</TableCell>
+                      <TableCell>₹{course.price}</TableCell>
+                      <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{new Date(course.createdAt).toLocaleDateString('en-CA')}</TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
+                          Update
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="error" onClick={() => handleDelete(course._id)}>
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleUpdateClose} color="primary">Cancel</Button>
-          <Button onClick={handleUpdateSubmit} color="primary">Update</Button>
-        </DialogActions>
-      </Dialog>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0 1rem 0' }}>
+          <Pagination
+            count={Math.ceil(filteredData.length / itemsPerPage)}
+            page={currentPage}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+            size="large"
+          />
+        </div>
+        {/* Update Dialog */}
+        <Dialog open={open} onClose={handleUpdateClose}>
+          <DialogTitle>Edit Course</DialogTitle>
+          <DialogContent>
+            {currentCourse && (
+              <>
+                <TextField
+                  label="Title"
+                  value={currentCourse.title}
+                  onChange={(e) => setCurrentCourse({ ...currentCourse, title: e.target.value })}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Description"
+                  value={currentCourse.description}
+                  onChange={(e) => setCurrentCourse({ ...currentCourse, description: e.target.value })}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Price"
+                  value={currentCourse.price}
+                  onChange={(e) => setCurrentCourse({ ...currentCourse, price: e.target.value })}
+                  fullWidth
+                  margin="normal"
+                />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                />
+              </>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleUpdateClose} color="primary">Cancel</Button>
+            <Button onClick={handleUpdateSubmit} color="primary">Update</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 }

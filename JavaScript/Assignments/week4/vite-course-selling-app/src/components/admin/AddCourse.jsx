@@ -70,8 +70,8 @@ export function AddCourse() {
         >
           <AddBoxOutlinedIcon fontSize='large' />
         </IconButton>
-        <Typography variant='h4' style={{ marginLeft: "32rem", marginBottom: "10px" }}>Courses Management</Typography>
       </div>
+      <Typography textAlign={"center"} variant='h4' style={{ marginBottom: "10px" }}>Courses Management</Typography>
 
       {/* Sidebar for Adding Course */}
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
