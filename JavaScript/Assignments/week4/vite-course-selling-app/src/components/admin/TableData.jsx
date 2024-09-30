@@ -104,11 +104,11 @@ export function CourseTable({ refresh }) {
       course._id.includes(value)
     );
     setFilteredData(filteredCourses);
-    setCurrentPage(1); // Reset to first page on new search
+    setCurrentPage(1);
   };
 
   useEffect(() => {
-    fetchInfo(); // Fetch course data when component mounts or refresh changes
+    fetchInfo();
   }, [refresh]);
 
   // Pagination logic
