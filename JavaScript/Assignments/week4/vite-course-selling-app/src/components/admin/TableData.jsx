@@ -126,7 +126,7 @@ export function CourseTable({ refresh }) {
         variant="outlined"
         value={searchTerm}
         onChange={handleSearchChange}
-        style={{ marginBottom: '20px', width: '60%' }}
+        style={{ marginBottom: '10px', width: '60%' }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
