@@ -34,13 +34,15 @@ export function Appbar() {
     alert('Logged Out');
     localStorage.setItem('token', null);
     setEmail(null); // Clear email state
-    navigate('/signup', { replace: true });
+    navigate('/', { replace: true });
   };
 
   return (
     <AppBar position="static" color="primary">
       <Toolbar style={{ display: "flex", justifyContent: "space-between", boxShadow: "8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25)" }}>
-        <Typography variant="h6" component="div">
+        <Typography style={{ cursor: "pointer" }} variant="h6" component="div" onClick={() => {
+          navigate('/')
+        }}>
           Coursera
         </Typography>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

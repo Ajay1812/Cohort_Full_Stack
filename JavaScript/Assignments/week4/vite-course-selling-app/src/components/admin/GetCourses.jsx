@@ -38,10 +38,12 @@ export function GetCourses() {
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Failed to fetch courses. Please check your permissions or try again later.");
-    } finally {
-      setLoading(false);
     }
   };
+
+  setTimeout(() => {
+    setLoading(false)
+  }, 1000)
 
   useEffect(() => {
     fetchInfo();
