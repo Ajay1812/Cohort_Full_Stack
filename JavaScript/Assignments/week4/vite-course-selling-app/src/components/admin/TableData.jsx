@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, InputAdornment, Pagination, Stack } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress, InputAdornment, Pagination, IconButton } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
 import { useNavigate } from "react-router-dom";
 
 export function CourseTable({ refresh }) {
@@ -149,11 +151,11 @@ export function CourseTable({ refresh }) {
                   <TableRow>
                     <TableCell style={{ color: "white" }}>ID</TableCell>
                     <TableCell style={{ color: "white" }}>Name</TableCell>
-                    <TableCell style={{ color: "white" }}>Description</TableCell>
+                    <TableCell style={{ color: "white", width: '170px' }}>Description</TableCell>
                     <TableCell style={{ color: "white" }}>Image</TableCell>
                     <TableCell style={{ color: "white" }}>Published</TableCell>
                     <TableCell style={{ color: "white" }}>Price</TableCell>
-                    <TableCell style={{ color: "white", width: '100px' }}>Date</TableCell>
+                    <TableCell style={{ color: "white", width: '80px' }}>Date</TableCell>
                     <TableCell style={{ color: "white" }}>Edit</TableCell>
                     <TableCell style={{ color: "white" }}>Delete</TableCell>
                   </TableRow>
@@ -180,12 +182,12 @@ export function CourseTable({ refresh }) {
                       <TableCell>₹{course.price}</TableCell>
                       <TableCell onClick={() => navigate(`/getcourse/${course._id}`)}>{new Date(course.createdAt).toLocaleDateString('en-CA')}</TableCell>
                       <TableCell>
-                        <Button variant="contained" color="success" onClick={() => handleUpdateOpen(course)}>
+                        <Button variant="contained" color="success" startIcon={<EditSharpIcon />} onClick={() => handleUpdateOpen(course)}>
                           Update
                         </Button>
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" color="error" onClick={() => handleDelete(course._id)}>
+                        <Button variant="contained" color="error" startIcon={<DeleteIcon />} onClick={() => handleDelete(course._id)}>
                           Delete
                         </Button>
                       </TableCell>

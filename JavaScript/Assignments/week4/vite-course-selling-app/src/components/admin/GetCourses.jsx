@@ -50,7 +50,7 @@ export function GetCourses() {
   }, []);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "auto" }}>
       <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem", height: 'auto' }}>
         <Typography variant="h3">Courses</Typography>
       </div>
