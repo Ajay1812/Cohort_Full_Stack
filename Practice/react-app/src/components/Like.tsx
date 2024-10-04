@@ -8,12 +8,10 @@ interface Props {
 
 const Like = ({ onClick }: Props) => {
   const [status, setStatus] = useState(false)
-
   const toggle = () => {
     setStatus(!status)
     onClick()
   }
-
   if (status) return <FcLike size={30} onClick={toggle} />
   return <FaRegHeart size={30} onClick={toggle} />
 }
