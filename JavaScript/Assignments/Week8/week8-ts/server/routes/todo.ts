@@ -21,9 +21,7 @@ router.post('/todos', authenticateJwt, (req, res) => {
   const description = todoProps.data?.description
   const done = false;
   const userId = req.headers['userId'];
-
   const newTodo = new Todo({ title:title, description: description, done, userId });
-
   newTodo.save()
     .then((savedTodo) => {
       res.status(201).json(savedTodo);
