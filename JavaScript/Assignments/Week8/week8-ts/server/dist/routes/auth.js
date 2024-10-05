@@ -16,22 +16,22 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_1 = __importDefault(require("express"));
 const middleware_1 = require("../middleware/");
 const db_1 = require("../db");
-const zod_1 = require("zod");
+const common_1 = require("@ajay_o1/common");
 const router = express_1.default.Router();
 // pm2 (process managers) - if your backend down any reason it went up automatically
 // npm i -g pm2 -> pm2 start dist/index.js (start server)
 // pm2 kill (kill process)
-const signupInput = zod_1.z.object({
-    username: zod_1.z.string().min(1).max(40),
-    password: zod_1.z.string().min(8).max(16)
-});
 router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedInput = signupInput.safeParse(req.body);
-    if (!parsedInput.success) {
-        res.status(411).json({ error: parsedInput.error });
+    let signupProps = common_1.signupInput.safeParse(req.body);
+    if (!signupProps.success) {
+        res.send(411).json({
+            message: "error while parsing."
+        });
         return;
     }
-    const { username, password } = parsedInput.data;
+    // const { username, password } = req.body
+    const username = signupProps.data.username;
+    const password = signupProps.data.password;
     const user = yield db_1.User.findOne({ username });
     if (user) {
         res.status(403).json({ message: 'User already exists' });
@@ -43,17 +43,17 @@ router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json({ message: 'User created successfully', token });
     }
 }));
-const loginInput = zod_1.z.object({
-    username: zod_1.z.string().min(1).max(40),
-    password: zod_1.z.string().min(8).max(16)
-});
 router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedInput = loginInput.safeParse(req.body);
-    if (!parsedInput.success) {
-        res.status(411).json({ error: parsedInput.error });
+    let loginProps = common_1.loginInput.safeParse(req.body);
+    if (!loginProps.success) {
+        res.send(411).json({
+            message: "error while parsing"
+        });
         return;
     }
-    const { username, password } = parsedInput.data;
+    // const { username, password } = req.body;
+    const username = loginProps.data.username;
+    const password = loginProps.data.password;
     const user = yield db_1.User.findOne({ username, password });
     if (user) {
         const token = jsonwebtoken_1.default.sign({ id: user._id }, middleware_1.SECRET, { expiresIn: '1h' });

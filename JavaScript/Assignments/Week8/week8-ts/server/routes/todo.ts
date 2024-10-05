@@ -1,7 +1,7 @@
 import express from 'express';
 import { authenticateJwt, SECRET } from "../middleware/index";
 import { Todo } from "../db";
-import {z} from 'zod'
+import { todoInput, todoIdSchema } from '@ajay_o1/common';
 const router = express.Router();
 
 interface CreateTodoInput {
@@ -9,24 +9,20 @@ interface CreateTodoInput {
   description : string
 }
 
-const titleInput = z.object({
-  title: z.string().min(1).max(60),
-  description: z.string().min(1).max(60)
-})
-
-
 router.post('/todos', authenticateJwt, (req, res) => {
-  const parsedInput = titleInput.safeParse(req.body)
-  if(!parsedInput.success){
-    res.status(411).json({error: parsedInput.error})
-    return;
+  let todoProps = todoInput.safeParse(req.body)
+  if (!todoProps.success){
+    res.send(411).json({
+      message: "error while parsing"
+    })
+    return
   }
-
-  // const input: CreateTodoInput = req.body;
+  const title = todoProps.data?.title
+  const description = todoProps.data?.description
   const done = false;
   const userId = req.headers['userId'];
 
-  const newTodo = new Todo({ title: parsedInput.data.title, description: parsedInput.data.description, done, userId });
+  const newTodo = new Todo({ title:title, description: description, done, userId });
 
   newTodo.save()
     .then((savedTodo) => {
@@ -53,7 +49,15 @@ router.get('/todos', authenticateJwt, (req, res) => {
 
 
 router.patch('/todos/:todoId/done', authenticateJwt, (req, res) => {
-  const { todoId } = req.params;
+
+  const patchTodoProps = todoIdSchema.safeParse(req.params)
+  if (!patchTodoProps.success){
+    res.send(411).json({
+      message: "error while parsing"
+    })
+    return
+  }
+  const todoId  = patchTodoProps.data.todoId;
   const userId = req.headers['userId'];
 
   Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })
