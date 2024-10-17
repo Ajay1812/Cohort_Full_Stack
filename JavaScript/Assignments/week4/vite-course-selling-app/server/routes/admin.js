@@ -71,7 +71,6 @@ router.post("/courses", authenticateJwt, upload.single('image'), async (req, res
     image: imagePath,  // Save relative path instead of image buffer
     published: req.body.published,
   };
-  
   const course = new Course(courseData);
   await course.save();
   res.status(201).json({ message: "Course created successfully", courseId: course.id });

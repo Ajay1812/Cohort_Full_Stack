@@ -3,22 +3,20 @@ name: Deploy
 on:
   push:
     branches:
-      - master # or the branch you want to deploy from
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: SSH and deploy
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > keyfile
-        chmod 600 keyfile
-        ssh -t -i keyfile ubuntu@ec2-url "sudo bash ~/deploy.sh"
-
-
+      - name: SSH and deploy
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > keyfile
+          chmod 600 keyfile
+          ssh -t -t -i keyfile ubuntu@ec2-url "sudo bash ~/deploy.sh"

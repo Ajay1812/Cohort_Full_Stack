@@ -17,7 +17,7 @@ export function LandingPage() {
           style={{
             width: "100%", height: "auto", borderRadius: "20px", maxWidth: "600px", marginLeft: "2rem", boxShadow: "5px 5px 15px #431232"
           }}
-          src="../assets/landing page.avif"
+          src="../assets/landing page.jpg"
           alt="Landing page illustration"
         />
       </Grid>

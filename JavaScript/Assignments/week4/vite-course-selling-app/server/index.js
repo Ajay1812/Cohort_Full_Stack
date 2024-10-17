@@ -9,10 +9,14 @@ const app = express()
 require("dotenv").config();
 app.use(cors())
 app.use(express.json())
-app.use('./assets', express.static(path.join(__dirname, 'assets')));
 
 app.use('/admin', adminRouter)
 app.use('/user', userRouter)
+
+app.use(express.static("public"));
+app.use("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+})
 
 // Connect to MongoDB
 const mongoUser = process.env.MONGO_USER;

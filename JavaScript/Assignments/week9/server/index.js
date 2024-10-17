@@ -17,7 +17,7 @@ const user_mongo = process.env.USER_MONGO
 const mongo_Pass = process.env.MONGO_PASS
 
 // Connect to MongoDB
-// DONT MISUSE THIS THANKYOU!!
-mongoose.connect(`mongodb+srv://${user_mongo}:${mongo_Pass}@cluster0.m7gnx.mongodb.net/`, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
+// mongoose.connect(`mongodb+srv://${user_mongo}:${mongo_Pass}@cluster0.m7gnx.mongodb.net/`, { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
+mongoose.connect(`mongodb+srv://akumar01c:X8flGfJn6EjbEgKC@cluster0.m7gnx.mongodb.net/courses`);
 
 app.listen(3000, () => console.log('Server running on port 3000'));

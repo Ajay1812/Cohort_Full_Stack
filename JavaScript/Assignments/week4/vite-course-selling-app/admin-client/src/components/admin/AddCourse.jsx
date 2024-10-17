@@ -38,7 +38,7 @@ export function AddCourse() {
       formData.append('image', file);
     }
 
-    await fetch('http://localhost:3000/admin/courses', {
+    await fetch('http://localhost:3000/admin/courses/', {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
